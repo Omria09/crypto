@@ -168,13 +168,13 @@ input:focus{
 }
 .main-div-title i{
     font-size: 3vh;
-    transition-duration: 0.225s;
+    transition-duration: 0.125s;
 }
 .main-div-title i:hover{
     font-size: 3.25vh;
 }
 .main-div-title i:active{
-    font-size: 2.75vh;
+    font-size: 2.85vh;
 }
 .selected{
     color: white;
