@@ -55,13 +55,15 @@ const Chart = () => {
     }
 
     const calculateChange = (dataChunks) => {
+        const last = dataChunks[dataChunks.length-1][1]
+        const first = dataChunks[1][1]
         console.log("last", dataChunks[dataChunks.length-1][1])
         console.log("first", dataChunks[1][1])
-        if (currentPrice > dataChunks[1][1]) {
-            setChange(currentPrice / dataChunks[1][1])
+        if (last > first) {
+            setChange(last / first)
             setChangeDir('green')
         } else {
-            setChange(dataChunks[1][1] / currentPrice )
+            setChange(first / last )
             setChangeDir('tomato')
         }
     }
