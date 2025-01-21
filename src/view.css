@@ -1,28 +1,77 @@
 .main-div{
+    top: 18vh;
     background-color: rgb(36,35,41);
-    min-height: 50vh;
-    position: absolute;
-    width: 50vh;
-    left: 75vh;
-    top: 25vh;
+    list-style-type: none;
+    margin: 0 auto;
+    padding: 2em;
+    text-align: center;
     border-radius: 10px;
-    display: flex;
-    flex-direction: column;
-    flex-wrap: wrap;
-    align-content: center;
+    position: relative;
+    max-width: 60vh;
+    height: 55vh;
+}
+img{
+    margin-right: 1vh;
+}
+.main-div::before{
+    filter: blur(1.5rem);
+    opacity: 0.5;
+}
+.main-div::before, .main-div::after{
+    content: '';
+    position: absolute;
+    height: 100%;
+    width: 100%;
+    background-image: conic-gradient(from var(--angle), rgb(78, 255, 196), rgb(127, 240, 255), rgb(127, 157, 255), rgb(130, 109, 252), #00c3ff, #62adfd);
+    top: 50%;
+    left: 50%;
+    translate: -50% -50%;
+    z-index: -1;
+    padding: 3px;
+    border-radius: 10px;
+    animation: 3s spin linear infinite;
+    will-change: transform;
+}
+
+/* Styles for mobile devices (screens narrower than 768px) */
+@media screen and (max-width: 768px) {
+    .main-div {
+      width: 75%; /* Mobile width */
+    }
+  }
+
+@property --angle{
+    syntax: "<angle>";
+    initial-value: 0deg;
+    inherits: false;
+}
+
+@keyframes spin{
+    from {
+        --angle: 0deg;
+    }
+    to {
+        --angle: 360deg;
+    }
 }
 h1{
     color: white;
     margin-top: 0;
+}
+.usd:focus .eth:focus{
+    background-color: red;
 }
 label{
     color:white;
     font-size: larger;
     margin-right: 1vh;
 }
+.volume{
+    text-align: left;
+}
 .centered{
+    margin-top: 25%;
     position: relative;
-    top: 12vh;
     display: flex;
     flex-wrap: nowrap;
     flex-direction: column;
@@ -32,13 +81,13 @@ label{
 }
 .main-div h2{
     margin-top: 3vh;
+    font-size: xx-large;
     color: white;
 }
 
 .chart-div{
     background-color:rgb(26,26,26);
     border-radius: 10px;
-    width: 80%;
     color: grey;
 }
 .chart-div-title{
@@ -78,11 +127,12 @@ label{
 .change{
     margin-left: 1vh;
     color:white;
-    width: 60px;
-    height: 20px;
+    width: 7vh;
+    height: 3vh;
     border-radius: 3px;
     display: flex;
     align-items: center;
+    justify-content: space-around;
 }
 .chart-div-top{
     display: flex;
@@ -103,7 +153,30 @@ input {
     transition: border 150ms cubic-bezier(0.4,0,0.2,1);
 }
 
-input:focus, input:valid {
+input:focus{
     outline: none;
     border: 1.5px solid #1a73e8;
+}
+
+.main-div-title{
+    display: flex;
+    justify-content: space-between;
+    align-content: flex-start;
+    flex-wrap: wrap;
+    flex-direction: row;
+    align-items: center;
+}
+.main-div-title i{
+    font-size: 3vh;
+    transition-duration: 0.225s;
+}
+.main-div-title i:hover{
+    font-size: 3.25vh;
+}
+.main-div-title i:active{
+    font-size: 2.75vh;
+}
+.selected{
+    color: white;
+    font-weight: bold;
 }

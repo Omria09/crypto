@@ -9,6 +9,7 @@ export default function App() {
     <BrowserRouter>
       <Routes>
       <Route path="/">
+          <Route path="" element={<Chart />} />
           <Route path="chart" element={<Chart />} />
           <Route path="convert" element={<Convert />} />
         </Route>
