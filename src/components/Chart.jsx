@@ -57,15 +57,10 @@ const Chart = () => {
     const calculateChange = (dataChunks) => {
         const last = dataChunks[dataChunks.length-1][1]
         const first = dataChunks[1][1]
-        console.log("last", dataChunks[dataChunks.length-1][1])
-        console.log("first", dataChunks[1][1])
-        if (last > first) {
-            setChange(last / first)
-            setChangeDir('green')
-        } else {
-            setChange(first / last )
-            setChangeDir('tomato')
-        }
+        const change = (Number(last) - Number(first)) / Math.abs(Number(first)) * 100
+        console.log('first ' + first +  ' last ' + last + ' change ' + change )
+        setChange(change)
+        change > 0 ? setChangeDir('green') : setChangeDir('red') 
     }
 
     useEffect(() => {
