@@ -16,6 +16,7 @@ const Chart = () => {
     const [marketCap, setMarketCap] = useState(0)
     const [changeDir, setChangeDir] = useState('tomato')
     const [selected, setSelected] = useState(['selected','','',''])
+    let timer = 300000 //5 minutes in ms
     const options = {
         curveType: "linear",
         legend: "none",
@@ -68,26 +69,31 @@ const Chart = () => {
     }
 
     useEffect(() => {
-        axios
-        .get(`https://api.coingecko.com/api/v3/coins/ethereum/market_chart?vs_currency=usd&days=${days}`, {
-            headers: {
-                'Access-Control-Allow-Origin' : '*',
-            }
-        })
-        .then(response => {
-            const prices = response.data.prices // get prices from api
-            const numberOfChunks = Math.ceil(prices.length / pointsCount) //get dividable number of chunks
-            let dataChunks = every_nth(prices,numberOfChunks) //get numberOfChunks slices every nth element
-            dataChunks.unshift(['date','price']) // add titles for the graph at the begining of the list
-            dataChunks.map(item => item[0] = new Date(item[0])) //convert strings to dates
-            setData(dataChunks)
-            setMarketCap(response.data.market_caps[0][1]) //set latest marketCap
-            calculateChange(dataChunks)
-        })
-        .catch(error => {
-            console.error(error)
-        })
-    },[days])
+        const fetchData = () => {
+            axios
+            .get(`https://api.coingecko.com/api/v3/coins/ethereum/market_chart?vs_currency=usd&days=${days}`, {
+                headers: {
+                    'Access-Control-Allow-Origin' : '*',
+                }
+            })
+            .then(response => {
+                const prices = response.data.prices // get prices from api
+                const numberOfChunks = Math.ceil(prices.length / pointsCount) //get dividable number of chunks
+                let dataChunks = every_nth(prices,numberOfChunks) //get numberOfChunks slices every nth element
+                dataChunks.unshift(['date','price']) // add titles for the graph at the begining of the list
+                dataChunks.map(item => item[0] = new Date(item[0])) //convert strings to dates
+                setData(dataChunks)
+                setMarketCap(response.data.market_caps[0][1]) //set latest marketCap
+                calculateChange(dataChunks)
+            })
+            .catch(error => {
+                console.error(error)
+            })
+        }
+        fetchData()
+        const intervalId = setInterval(() => {fetchData()}, timer)
+        return () => clearInterval(intervalId)
+        }, [days])
     return (
         <div>
             <div className="main-div">

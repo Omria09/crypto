@@ -15,23 +15,29 @@ const Convert = () => {
     const [multiplier, setMultiplier] = useState(0)
     const [errorMsg, setErrorMsg] = useState('')
     const navigate = useNavigate();
+    let timer = 300000 //5 minutes in ms
 
 
     useEffect(() => {
-        axios
-        .get(`https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&ids=ethereum`, {
-            headers: {
-                'Access-Control-Allow-Origin' : '*',
-            }
-        })
-        .then(response => {
-            setErrorMsg('')
-            setMultiplier(response.data[0].current_price)
-        })
-        .catch(error => {
-            setErrorMsg(error.message)
-            console.error(error)
-        })
+        const fetchData = () => {
+            axios
+            .get(`https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&ids=ethereum`, {
+                headers: {
+                    'Access-Control-Allow-Origin' : '*',
+                }
+            })
+            .then(response => {
+                setErrorMsg('')
+                setMultiplier(response.data[0].current_price)
+            })
+            .catch(error => {
+                setErrorMsg(error.message)
+                console.error(error)
+            })
+        }
+        fetchData()
+        const intervalId = setInterval(() => {fetchData()}, timer)
+        return () => clearInterval(intervalId)
     },[])
     return (
         <div>
