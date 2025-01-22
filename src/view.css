@@ -7,8 +7,9 @@
     text-align: center;
     border-radius: 10px;
     position: relative;
-    max-width: 60vh;
+    width: 60vh;
     height: 60vh;
+    display: table;
 }
 img{
     margin-right: 1vh;
@@ -49,14 +50,14 @@ img{
 }
 
 /* Styles for mobile devices (screens narrower than 768px) */
-@media screen and (max-width: 768px) {
+@media screen and (max-width: 548px) {
     .dynamic-background{
-        margin-top: 15vh !important;
-        width: 75% !important;
-        background-size: 30vh !important;
+        margin-top: 25% !important;
+        width: 100% !important;
+        background-size: 80% !important;
     }
     .main-div {
-      width: 75%; /* Mobile width */
+      width: 75% !important; /* Mobile width */
     }
   }
 
@@ -88,7 +89,6 @@ label{
 }
 .volume{
     text-align: left;
-    margin-top: 2vh;
     margin-bottom: 3vh;
 }
 .centered{

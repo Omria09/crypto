@@ -109,8 +109,6 @@ const Chart = () => {
                     <GChart className="line-chart"
                         loading={!data? true : false}
                         chartType="LineChart"
-                        width="100%"
-                        height="100%"
                         margin={{left:8,right:8}}
                         data={data}
                         options={options}
