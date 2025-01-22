@@ -10,7 +10,7 @@ import logo from '../assets/eth-logo.png';
 const Chart = () => {
     const navigate = useNavigate();
     const pointsCount = 7 //7 as the example image
-    const [days, setDays] = useState(7) //defaults to 7 days
+    const [days, setDays] = useState(7) //starts at 7 days
     // const numberOfChunks = Math.ceil(dummyData.prices.length / pointsCount)
     const [currentPrice, setCurrentPrice] = useState(0)
     const [data, setData] = useState(0)
@@ -42,7 +42,7 @@ const Chart = () => {
         },
         title: "",
         series:{
-            0: { color: "#ff7e5f"},
+            0: { color: 'white'},
         }
       };
 
@@ -116,6 +116,7 @@ const Chart = () => {
                         margin={{left:8,right:8}}
                         data={data}
                         options={options}
+                        annotations={options.annotations}
                         legendToggle
                     />
                     <div className="days-selector">

@@ -1,35 +1,19 @@
 
 import { useEffect, useState } from "react"
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
+import useInput from "../hooks/useInput";
 import '../view.css'
 import 'font-awesome/css/font-awesome.min.css';
-import { useNavigate } from "react-router-dom";
 import logo from '../assets/eth-logo.png';
 import logoUsd from '../assets/usd.png';
 
 const Convert = () => {
-    const [usdValue, setUsdValue] = useState('')
-    const [ethValue, setEthValue] = useState('')
+    const usdValue = useInput('text','usd')
+    const ethValue = useInput('text','eth')
     const [multiplier, setMultiplier] = useState(0)
     const [errorMsg, setErrorMsg] = useState('')
     const navigate = useNavigate();
-    const re = /^[0-9]*(\.|,)?[0-9]*$/;
-
-    const handleChangeUSD = (e) => {
-        const value = e.target.value
-        if (value === '' || re.test(value)) {
-            setUsdValue(value)
-            multiplier != 0 ? setEthValue(value / multiplier) : null
-        }
-    }
-    
-    const handleChangeETH = (e) => {
-        const value = e.target.value
-        if (value === '' || re.test(value)){
-            setEthValue(value)
-            setUsdValue(value * multiplier)
-        }
-    }
 
 
     useEffect(() => {
@@ -60,12 +44,18 @@ const Convert = () => {
                     <div>
                         <img src={logoUsd} width={25} height={25} alt="eth"/>
                         <label>USD</label>
-                        <input className="usd" value={usdValue} onChange={handleChangeUSD}></input>
+                        <input className="usd" value={usdValue.value} 
+                            onChange={
+                                (e) => usdValue.onChange(e,ethValue,multiplier)}>
+                        </input>
                     </div>
                     <div>
                         <img src={logo} width={25} height={25} alt="eth"/>
                         <label>ETH <i className="fa-brands fa-ethereum"></i> </label>
-                        <input className="eth" value={ethValue} onChange={handleChangeETH}></input>
+                        <input className="eth" value={ethValue.value} 
+                            onChange={
+                                (e) => ethValue.onChange(e,usdValue,multiplier)}>
+                        </input>
                     </div>
                     <a style={{'color':'red', 'marginTop':'1vh'}}>{errorMsg}</a>
                 </div>
