@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react"
 
 const useInput = (type, currency) => {
-    const [value, setValue] = useState('')
+    const [value, setValue] = useState('0')
     const re = /^[0-9]*(\.|)?[0-9]*$/; //regex to only allow decimals and a dot (.)
   
     const onChange = (event, otherState,multiplier) => {

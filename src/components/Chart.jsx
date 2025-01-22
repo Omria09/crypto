@@ -3,7 +3,6 @@ import { Chart as GChart } from 'react-google-charts'
 import axios from "axios";
 import '../view.css'
 import 'font-awesome/css/font-awesome.min.css';
-import dummyData from '../dummydata.json';
 import { useNavigate } from "react-router-dom";
 import logo from '../assets/eth-logo.png';
 
@@ -11,7 +10,6 @@ const Chart = () => {
     const navigate = useNavigate();
     const pointsCount = 7 //7 as the example image
     const [days, setDays] = useState(7) //starts at 7 days
-    // const numberOfChunks = Math.ceil(dummyData.prices.length / pointsCount)
     const [currentPrice, setCurrentPrice] = useState(0)
     const [data, setData] = useState(0)
     const [change, setChange] = useState(0)
@@ -101,7 +99,7 @@ const Chart = () => {
                     <div className="chart-div-top">
                         <div className="change" style={{ 'backgroundColor': changeDir }}>
                             {changeDir === 'green' ? <i className="fa fa-angle-up" style={{'color':'white'}}></i> : <i className="fa fa-angle-down" style={{'color':'white'}}></i>}
-                            {change.toFixed(2) + '%'}
+                            {Math.abs(change.toFixed(2)) + '%'}
                         </div>
                         <div className="chart-div-title">
                             <h2>{data? '$' + currentPrice.toLocaleString(undefined, {maximumFractionDigits:2}) + ' USD': 0 + ' USD'}</h2>

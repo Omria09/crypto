@@ -7,6 +7,7 @@ import '../view.css'
 import 'font-awesome/css/font-awesome.min.css';
 import logo from '../assets/eth-logo.png';
 import logoUsd from '../assets/usd.png';
+import CurrencyInput from "./CurrencyInput";
 
 const Convert = () => {
     const usdValue = useInput('text','usd')
@@ -32,31 +33,28 @@ const Convert = () => {
             console.error(error)
         })
     },[])
-
     return (
         <div>
             <div className="main-div">
-                    <div className="main-div-title">
-                        <h2>Convert</h2>
-                        <i className="fa fa-arrow-left" style={{'color':'white','cursor':'pointer'}} onClick={() => navigate('/chart')}></i>
-                    </div>
+                <div className="dynamic-background"></div>
+                <div className="main-div-title">
+                    <h2>Convert</h2>
+                    <i className="fa fa-arrow-left" style={{'color':'white','cursor':'pointer'}} onClick={() => navigate('/chart')}></i>
+                </div>
                 <div className="centered">
-                    <div>
-                        <img src={logoUsd} width={25} height={25} alt="eth"/>
-                        <label>USD</label>
-                        <input className="usd" value={usdValue.value} 
-                            onChange={
-                                (e) => usdValue.onChange(e,ethValue,multiplier)}>
-                        </input>
-                    </div>
-                    <div>
-                        <img src={logo} width={25} height={25} alt="eth"/>
-                        <label>ETH <i className="fa-brands fa-ethereum"></i> </label>
-                        <input className="eth" value={ethValue.value} 
-                            onChange={
-                                (e) => ethValue.onChange(e,usdValue,multiplier)}>
-                        </input>
-                    </div>
+                    <CurrencyInput
+                        logo={logoUsd}
+                        currency={'usd'}
+                        value={usdValue}
+                        multiplier={multiplier}
+                        otherValue={ethValue}/>
+                    <CurrencyInput
+                        logo={logo}
+                        currency={'eth'}
+                        value={ethValue}
+                        multiplier={multiplier}
+                        otherValue={usdValue} 
+                    />
                     <a style={{'color':'red', 'marginTop':'1vh'}}>{errorMsg}</a>
                 </div>
             </div>
