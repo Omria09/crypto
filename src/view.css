@@ -50,6 +50,11 @@ img{
 
 /* Styles for mobile devices (screens narrower than 768px) */
 @media screen and (max-width: 768px) {
+    .dynamic-background{
+        margin-top: 15vh !important;
+        width: 75% !important;
+        background-size: 30vh !important;
+    }
     .main-div {
       width: 75%; /* Mobile width */
     }
