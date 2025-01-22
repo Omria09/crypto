@@ -8,21 +8,36 @@
     border-radius: 10px;
     position: relative;
     max-width: 60vh;
-    height: 55vh;
+    height: 60vh;
 }
 img{
     margin-right: 1vh;
 }
 .main-div::before{
     filter: blur(1.5rem);
-    opacity: 0.5;
+    opacity: 0.9;
 }
 .main-div::before, .main-div::after{
     content: '';
     position: absolute;
     height: 100%;
     width: 100%;
-    background-image: conic-gradient(from var(--angle), rgb(78, 255, 196), rgb(127, 240, 255), rgb(127, 157, 255), rgb(130, 109, 252), #00c3ff, #62adfd);
+    background-image: conic-gradient(from var(--angle),
+    rgb(89,57,218,1),
+    rgb(101,57,206,1),
+    rgb(101,57,220,1),
+    rgb(133,57,179,1),
+    rgb(144,55,163,1),
+    rgb(153,53,152,1),
+    rgb(163,50,138,1),
+    rgb(171,48,128,1),
+    rgb(181,46,115,1), 
+    rgb(188,43,108,1),
+    rgb(193,44,102,1),
+    rgb(200,41,95,1),
+    rgb(206,40,88,1),
+    rgb(209,40,83,1),
+    rgb(200,41,95,1));
     top: 50%;
     left: 50%;
     translate: -50% -50%;
@@ -68,6 +83,8 @@ label{
 }
 .volume{
     text-align: left;
+    margin-top: 2vh;
+    margin-bottom: 3vh;
 }
 .centered{
     margin-top: 25%;
@@ -89,6 +106,7 @@ label{
     background-color:rgb(26,26,26);
     border-radius: 10px;
     color: grey;
+    min-height: 45vh;
 }
 .chart-div-title{
     align-items: center;

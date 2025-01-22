@@ -1,5 +1,4 @@
 import { useEffect, useState } from "react";
-import { LineChart } from '@mui/x-charts/LineChart';
 import { Chart as GChart } from 'react-google-charts'
 import axios from "axios";
 import '../view.css'
@@ -12,12 +11,13 @@ const Chart = () => {
     const navigate = useNavigate();
     const pointsCount = 7 //7 as the example image
     const [days, setDays] = useState(7) //defaults to 7 days
-    const numberOfChunks = Math.ceil(dummyData.prices.length / pointsCount)
+    // const numberOfChunks = Math.ceil(dummyData.prices.length / pointsCount)
     const [currentPrice, setCurrentPrice] = useState(0)
     const [data, setData] = useState(0)
     const [change, setChange] = useState(0)
     const [marketCap, setMarketCap] = useState(0)
     const [changeDir, setChangeDir] = useState('tomato')
+    const [selected, setSelected] = useState(['selected','','',''])
     const options = {
         curveType: "linear",
         legend: "none",
@@ -54,11 +54,17 @@ const Chart = () => {
         return filtered
     }
 
+    const handleDays = (i, days) => {
+        setDays(days)
+        let newSelected = ['','','','']
+        newSelected[i] = 'selected'
+        setSelected(newSelected)
+    }
+
     const calculateChange = (dataChunks) => {
         const last = dataChunks[dataChunks.length-1][1]
         const first = dataChunks[1][1]
         const change = (Number(last) - Number(first)) / Math.abs(Number(first)) * 100
-        console.log('first ' + first +  ' last ' + last + ' change ' + change )
         setChange(change)
         change > 0 ? setChangeDir('green') : setChangeDir('red') 
     }
@@ -71,12 +77,13 @@ const Chart = () => {
             }
         })
         .then(response => {
-            const prices = response.data.prices
+            const prices = response.data.prices // get prices from api
+            const numberOfChunks = Math.ceil(prices.length / pointsCount) //get dividable number of chunks
             let dataChunks = every_nth(prices,numberOfChunks) //get numberOfChunks slices every nth element
-            dataChunks.unshift(['date','price'])
-            dataChunks.map(item => item[0] = new Date(item[0]))
+            dataChunks.unshift(['date','price']) // add titles for the graph at the begining of the list
+            dataChunks.map(item => item[0] = new Date(item[0])) //convert strings to dates
             setData(dataChunks)
-            setMarketCap(response.data.market_caps[0][1])
+            setMarketCap(response.data.market_caps[0][1]) //set latest marketCap
             calculateChange(dataChunks)
         })
         .catch(error => {
@@ -112,10 +119,10 @@ const Chart = () => {
                         legendToggle
                     />
                     <div className="days-selector">
-                        <h6 className="selected" onClick={(e) => setDays(7)}>7D</h6>
-                        <h6 onClick={(e) => setDays(30)}>30D</h6>
-                        <h6 onClick={(e) => setDays(180)}>180D</h6>
-                        <h6 onClick={(e) => setDays(365)}>1Y</h6>
+                        <h6 className={selected[0]} onClick={() => handleDays(0,7)}>7D</h6>
+                        <h6 className={selected[1]} onClick={() => handleDays(1,30)}>30D</h6>
+                        <h6 className={selected[2]} onClick={() => handleDays(2,180)}>180D</h6>
+                        <h6 className={selected[3]} onClick={() => handleDays(3,365)}>1Y</h6>
                     </div>
                 </div>
                 <div className="volume">
